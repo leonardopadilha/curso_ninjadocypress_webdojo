@@ -38,7 +38,7 @@ Cypress.Commands.add('submitLoginForm', (email, password) => {
 })
 
 Cypress.Commands.add('goTo', (buttonName, pageTitle) => {
-  cy.contains('button', buttonName)
+  cy.contains('button', buttonName) // buscou o botão mas o nome ele vai procurar no filho da tag
     .should('be.visible')
     .click()
 
