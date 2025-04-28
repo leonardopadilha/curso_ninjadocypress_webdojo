@@ -14,11 +14,35 @@ describe('Formulário de Consultoria', () => {
       .should('have.value', '(99) 99999-9999') // O número com a máscára é exibido no value do campo
 
     // cy.get('#consultancyType').select('inCompany')
-    // //label[text()="Tipo de Consultoria"]/..//select
+    // xpath -> //label[text()="Tipo de Consultoria"]/..//select
     cy.contains('label', 'Tipo de Consultoria')
       .parent()
       .find('select')
       .select('Individual')
+
+      // xpath -> //span[text()="Pessoa Física"]//..//input
+      //input[name=personType]
+      /*cy.contains('span', 'Pessoa Física')
+        .parent()
+        .find('input')
+        .check() // rádio button
+      */
+      cy.contains('label', 'Pessoa Física')
+        .find('input')
+        .check() // rádio button
+        .should('be.checked')
+
+      cy.contains('label', 'Pessoa Jurídica')
+        .find('input')
+        .should('not.be.checked')
+
+      cy.contains('label', 'CPF')
+        .parent()
+        .find('input')
+        .type('12312312387')
+        .should('have.value', '123.123.123-87')
+
+
 
   })
 })
