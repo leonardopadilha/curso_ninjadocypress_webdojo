@@ -29,7 +29,7 @@ describe('Formulário de Consultoria', () => {
       */
       cy.contains('label', 'Pessoa Física')
         .find('input')
-        .check() // rádio button
+        .click() // rádio button
         .should('be.checked')
 
       cy.contains('label', 'Pessoa Jurídica')
@@ -42,7 +42,12 @@ describe('Formulário de Consultoria', () => {
         .type('12312312387')
         .should('have.value', '123.123.123-87')
 
-
-
+      const discoveryChannels = ["Instagram", "LinkedIn", "Udemy", "YouTube", "Indicação de Amigo"]
+      discoveryChannels.forEach(channel => {
+        cy.contains('label', channel)
+          .find('input')
+          .check()
+          .should('be.checked')
+      })
   })
 })
