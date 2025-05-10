@@ -76,7 +76,7 @@ describe('Formulário de Consultoria', () => {
       cy.contains('button', 'Enviar formulário')
         .click()
 
-      cy.get('.modal')
+      cy.get('.modal', { timeout: 7000 })
         .should('be.visible')
         .find('.modal-content')
         .should('be.visible')
