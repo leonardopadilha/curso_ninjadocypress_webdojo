@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "serve -s dist -p 3000",
-    "test:web": "npx cypress open"
+    "test:web": "npx cypress open",
+    "test:ter": "npx cypress run",
+    "test:chr": "npx cypress run --browser=chome",
+    "show:nav": "npx cypress run --headed"
   },
   "dependencies": {
     "cypress-real-events": "^1.14.0",
