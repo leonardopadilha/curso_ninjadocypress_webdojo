@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
 
 describe('Formulário de Consultoria', () => {
-  it('Deve solicitar consultoria individual', () => {
+  beforeEach(() => {
     cy.start()
     cy.submitLoginForm('papito@webdojo.com', 'katana123')
     cy.goTo('Formulários', 'Consultoria')
+  })
 
+  it('Deve solicitar consultoria individual', () => {
     cy.get('input[placeholder*=nome]').type('Leonardo Padilha')
     cy.get('input[placeholder="Digite seu email"]').type('leonardo@webdojo.com')
     
@@ -84,10 +86,6 @@ describe('Formulário de Consultoria', () => {
   })
   
   it('Deve verificar os campos obrigatórios', () => {
-    cy.start()
-    cy.submitLoginForm('papito@webdojo.com', 'katana123')
-    cy.goTo('Formulários', 'Consultoria')
-
     cy.contains('button', 'Enviar formulário')
       .click()
 
