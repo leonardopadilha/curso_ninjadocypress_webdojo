@@ -1,0 +1,40 @@
+{
+  "personal": {
+    "name": "Leonardo Padilha",
+    "email": "leonardo@webdojo.com",
+    "phone": "99 99999-9999",
+    "consultancyType": "Individual",
+    "personType": "cpf",
+    "document": "12312312387",
+    "discoveryChannels": [
+      "Instagram",
+      "LinkedIn",
+      "Udemy",
+      "YouTube",
+      "Indicação de Amigo"
+    ],
+    "file": "./cypress/fixtures/image_cypress.pdf",
+    "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+    "techs": [
+      "Cypress",
+      "Playwright",
+      "Selenium",
+      "WebdriverIO",
+      "Robot Framework"
+    ],
+    "terms": true
+  },
+  "company": {
+    "name": "Leonardo Padilha",
+    "email": "leonardo@webdojo.com",
+    "phone": "99 99999-9999",
+    "consultancyType": "In Company",
+    "personType": "cnpj",
+    "document": "91179737000179",
+    "discoveryChannels": ["LinkedIn"],
+    "file": "./cypress/fixtures/image_cypress.pdf",
+    "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+    "techs": ["Cypress", "Playwright"],
+    "terms": true
+  }
+}

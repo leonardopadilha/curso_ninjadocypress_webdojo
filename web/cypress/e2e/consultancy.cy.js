@@ -4,23 +4,12 @@ describe('Formulário de Consultoria', () => {
   beforeEach(() => {
     cy.login()
     cy.goTo('Formulários', 'Consultoria')
+    cy.fixture('consultancy').as('consultancyData')
   })
 
-  it('Deve solicitar consultoria individual', () => {
+  it('Deve solicitar consultoria individual', function() {
 
-    const consultancyForm = {
-      name: 'Leonardo Padilha',
-      email: 'leonardo@webdojo.com',
-      phone: '99 99999-9999',
-      consultancyType: 'Individual',
-      personType: 'cpf',
-      document: '12312312387',
-      discoveryChannels: ["Instagram", "LinkedIn", "Udemy", "YouTube", "Indicação de Amigo"],
-      file: './cypress/fixtures/image_cypress.pdf',
-      description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
-      techs: ['Cypress', 'Playwright', 'Selenium', 'WebdriverIO', 'Robot Framework'],
-      terms: true
-    }
+    const consultancyForm = this.consultancyData.personal
 
     cy.get('input[placeholder*=nome]').type(consultancyForm.name)
     cy.get('input[placeholder="Digite seu email"]').type(consultancyForm.email)
@@ -115,21 +104,9 @@ describe('Formulário de Consultoria', () => {
         .and('have.text', 'Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
   })
 
-  it('Deve solicitar consultoria In Company', () => {
+  it('Deve solicitar consultoria In Company', function () {
 
-    const consultancyForm = {
-      name: 'Leonardo Padilha',
-      email: 'leonardo@webdojo.com',
-      phone: '99 99999-9999',
-      consultancyType: 'In Company',
-      personType: 'cnpj',
-      document: '91179737000179',
-      discoveryChannels: ["LinkedIn"],
-      file: './cypress/fixtures/image_cypress.pdf',
-      description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
-      techs: ['Cypress', 'Playwright'],
-      terms: true
-    }
+    const consultancyForm = this.consultancyData.company
 
     cy.get('input[placeholder*=nome]').type(consultancyForm.name)
     cy.get('input[placeholder="Digite seu email"]').type(consultancyForm.email)
