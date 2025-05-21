@@ -1,21 +1,21 @@
 /// <reference types="cypress" />
 
+//import consultancyData from '../fixtures/consultancy.json'
+import { personal, company } from '../fixtures/consultancy.json'
+
 describe('Formulário de Consultoria', () => {
   beforeEach(() => {
     cy.login()
     cy.goTo('Formulários', 'Consultoria')
-    cy.fixture('consultancy').as('consultancyData')
+    //cy.fixture('consultancy').as('consultancyData')
   })
 
-  it('Deve solicitar consultoria individual', function() {
-
-    const consultancyForm = this.consultancyData.personal
-
-    cy.get('input[placeholder*=nome]').type(consultancyForm.name)
-    cy.get('input[placeholder="Digite seu email"]').type(consultancyForm.email)
+  it('Deve solicitar consultoria individual', () => {
+    cy.get('input[placeholder*=nome]').type(personal.name)
+    cy.get('input[placeholder="Digite seu email"]').type(personal.email)
     
     cy.get('input[placeholder="(00) 00000-0000"]')
-      .type(consultancyForm.phone)
+      .type(personal.phone)
       //.should('have.value', '(99) 99999-9999') // O número com a máscára é exibido no value do campo
 
     // cy.get('#consultancyType').select('inCompany')
@@ -23,7 +23,7 @@ describe('Formulário de Consultoria', () => {
     cy.contains('label', 'Tipo de Consultoria')
       .parent()
       .find('select')
-      .select(consultancyForm.consultancyType)
+      .select(personal.consultancyType)
 
       // xpath -> //span[text()="Pessoa Física"]//..//input
       //input[name=personType]
@@ -33,7 +33,7 @@ describe('Formulário de Consultoria', () => {
         .check() // rádio button
       */
 
-      if (consultancyForm.personType === 'cpf') {
+      if (personal.personType === 'cpf') {
         cy.contains('label', 'Pessoa Física')
         .find('input')
         .click() // rádio button
@@ -44,7 +44,7 @@ describe('Formulário de Consultoria', () => {
         .should('not.be.checked')
       }
 
-      if (consultancyForm.personType === 'cnpj') {
+      if (personal.personType === 'cnpj') {
         cy.contains('label', 'Pessoa Física')
         .find('input')
         .should('not.be.checked')
@@ -58,11 +58,11 @@ describe('Formulário de Consultoria', () => {
       cy.contains('label', 'CPF')
         .parent()
         .find('input')
-        .type(consultancyForm.document)
+        .type(personal.document)
         //.should('have.value', '123.123.123-87')
 
       //const discoveryChannels = ["Instagram", "LinkedIn", "Udemy", "YouTube", "Indicação de Amigo"]
-      consultancyForm.discoveryChannels.forEach(channel => {
+      personal.discoveryChannels.forEach(channel => {
         cy.contains('label', channel)
           .find('input')
           .check()
@@ -70,13 +70,13 @@ describe('Formulário de Consultoria', () => {
       })
 
       cy.get('input[type="file"]')
-        .selectFile(consultancyForm.file, { force: true })
+        .selectFile(personal.file, { force: true })
 
       cy.get('textarea[placeholder="Descreva mais detalhes sobre sua necessidade"]')
-        .type(consultancyForm.description)
+        .type(personal.description)
 
       //const tecnologias = ['Cypress', 'Playwright', 'Selenium', 'WebdriverIO', 'Robot Framework']
-      consultancyForm.techs.forEach(tecnologia => {
+      personal.techs.forEach(tecnologia => {
         cy.get('input[placeholder="Digite uma tecnologia e pressione Enter"]')
           .type(tecnologia)
           .type('{enter}')
@@ -87,7 +87,7 @@ describe('Formulário de Consultoria', () => {
           .should('be.visible')
       })
 
-      if (consultancyForm.terms) {
+      if (personal.terms) {
         cy.contains('label', 'termos de uso')
         .find('input')
         .check()
@@ -104,15 +104,12 @@ describe('Formulário de Consultoria', () => {
         .and('have.text', 'Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
   })
 
-  it('Deve solicitar consultoria In Company', function () {
-
-    const consultancyForm = this.consultancyData.company
-
-    cy.get('input[placeholder*=nome]').type(consultancyForm.name)
-    cy.get('input[placeholder="Digite seu email"]').type(consultancyForm.email)
+  it('Deve solicitar consultoria In Company', () => {
+    cy.get('input[placeholder*=nome]').type(company.name)
+    cy.get('input[placeholder="Digite seu email"]').type(company.email)
     
     cy.get('input[placeholder="(00) 00000-0000"]')
-      .type(consultancyForm.phone)
+      .type(company.phone)
       //.should('have.value', '(99) 99999-9999') // O número com a máscára é exibido no value do campo
 
     // cy.get('#consultancyType').select('inCompany')
@@ -120,7 +117,7 @@ describe('Formulário de Consultoria', () => {
     cy.contains('label', 'Tipo de Consultoria')
       .parent()
       .find('select')
-      .select(consultancyForm.consultancyType)
+      .select(company.consultancyType)
 
       // xpath -> //span[text()="Pessoa Física"]//..//input
       //input[name=personType]
@@ -130,7 +127,7 @@ describe('Formulário de Consultoria', () => {
         .check() // rádio button
       */
 
-      if (consultancyForm.personType === 'cpf') {
+      if (company.personType === 'cpf') {
         cy.contains('label', 'Pessoa Física')
         .find('input')
         .click() // rádio button
@@ -141,7 +138,7 @@ describe('Formulário de Consultoria', () => {
         .should('not.be.checked')
       }
 
-      if (consultancyForm.personType === 'cnpj') {
+      if (company.personType === 'cnpj') {
         cy.contains('label', 'Pessoa Jurídica')
         .find('input')
         .click() // rádio button
@@ -155,11 +152,11 @@ describe('Formulário de Consultoria', () => {
       cy.contains('label', 'CNPJ')
         .parent()
         .find('input')
-        .type(consultancyForm.document)
+        .type(company.document)
         //.should('have.value', '123.123.123-87')
 
       //const discoveryChannels = ["Instagram", "LinkedIn", "Udemy", "YouTube", "Indicação de Amigo"]
-      consultancyForm.discoveryChannels.forEach(channel => {
+      company.discoveryChannels.forEach(channel => {
         cy.contains('label', channel)
           .find('input')
           .check()
@@ -167,13 +164,13 @@ describe('Formulário de Consultoria', () => {
       })
 
       cy.get('input[type="file"]')
-        .selectFile(consultancyForm.file, { force: true })
+        .selectFile(company.file, { force: true })
 
       cy.get('textarea[placeholder="Descreva mais detalhes sobre sua necessidade"]')
-        .type(consultancyForm.description)
+        .type(company.description)
 
       //const tecnologias = ['Cypress', 'Playwright', 'Selenium', 'WebdriverIO', 'Robot Framework']
-      consultancyForm.techs.forEach(tecnologia => {
+      company.techs.forEach(tecnologia => {
         cy.get('input[placeholder="Digite uma tecnologia e pressione Enter"]')
           .type(tecnologia)
           .type('{enter}')
@@ -184,7 +181,7 @@ describe('Formulário de Consultoria', () => {
           .should('be.visible')
       })
 
-      if (consultancyForm.terms) {
+      if (company.terms) {
         cy.contains('label', 'termos de uso')
         .find('input')
         .check()
