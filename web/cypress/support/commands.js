@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import "cypress-real-events";
+import "./actions/consultancy.actions";
 
 Cypress.Commands.add('start', () => {
   cy.viewport(1440, 900)
