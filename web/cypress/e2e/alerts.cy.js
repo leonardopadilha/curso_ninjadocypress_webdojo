@@ -10,7 +10,7 @@ describe('Validações de Alertas em JavaScript (componente do navegador)', () =
 
     // Ouvinte
     cy.on('window:alert', (msg) => {
-      expect(msg).to.equal('Olá QA, eu sou uma Alert Box!')
+      expect(msg).to.equal('Olá QA, eu sou um Alert Box!')
     })
 
     cy.contains('button', 'Mostrar Alert').click()
@@ -18,7 +18,7 @@ describe('Validações de Alertas em JavaScript (componente do navegador)', () =
 
   it('Deve confirmar um diálogo e validar a resposta positiva', () =>{
     cy.on('window:confirm', (msg) => {
-      expect(msg).eql('Aperta um botão!')
+      expect(msg).eql('Aperte um botão!')
       return true // Simula o clique no botão OK
     })
 
@@ -31,7 +31,7 @@ describe('Validações de Alertas em JavaScript (componente do navegador)', () =
 
   it('Deve cancelar um diálogo e validar a resposta negativa', () =>{
     cy.on('window:confirm', (msg) => {
-      expect(msg).eql('Aperta um botão!')
+      expect(msg).eql('Aperte um botão!')
       return false // Simula o clique no botão Cancelar
     })
 
@@ -48,7 +48,7 @@ describe('Validações de Alertas em JavaScript (componente do navegador)', () =
     })
 
     cy.on('window:alert', (msg) => {
-      expect(msg).to.equal('Olá Leonardo! Boas vindas ao WebDojo!')
+      expect(msg).to.equal('Olá Leonardo! Boas-vindas ao WebDojo!')
     })
 
     cy.contains('button', 'Mostrar Prompt').click()

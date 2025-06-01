@@ -5,6 +5,9 @@ describe('Tocar o vídeo', () => {
     cy.login()
     cy.contains('Video').click()
 
+    // think time
+    cy.wait(3000)
+
     cy.get('iframe[title="Video Player"]')
       .should('exist')
       .its('0.contentDocument.body') //Função do cypress utilizada para obter propriedades dos elementos e outros
@@ -15,8 +18,8 @@ describe('Tocar o vídeo', () => {
       .find('.play-button')
       .click()
 
-    cy.get('iFramePlayer')
-      .find('pause-button')
+    cy.get('@iFramePlayer')
+      .find('.pause-button')
       .should('be.visible')
   })
 })
