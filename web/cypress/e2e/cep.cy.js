@@ -4,7 +4,7 @@ import address from '../fixtures/cep.json'
 
 describe('Formulário de Consultoria', () => {
   beforeEach(() => {
-    cy.login()
+    cy.login(true)
     cy.goTo('Integração', 'Consulta de CEP')
   })
 

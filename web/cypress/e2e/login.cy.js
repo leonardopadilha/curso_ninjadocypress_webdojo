@@ -27,6 +27,12 @@ describe('Login', () => {
     cy.getCookie('login_date').should((cookie) => {
       expect(cookie.value).to.eq(getTodayFormattedDate())
     })
+
+    cy.window().then((win) => {
+      const token = win.localStorage.getItem('token')
+      expect(token).to.exist
+      expect(token).to.match(/^[a-f0-9]{32}$/) // verifica o valor MD5 que o formato do token
+    })
   })
 
   it('Não deve logar com senha inválida', () => {
