@@ -6,6 +6,8 @@
     "dev": "serve -s dist -p 3000",
     "test:web": "npx cypress open",
     "test:ter": "npx cypress run",
+    "test:c": "npx cypress run --spec .\\cypress\\e2e\\consultancy.cy.js",
+    "test:login:mobile": "npx cypress run --spec .\\cypress\\e2e\\login.cy.js --config viewportWidth=414,viewportHeight=896",
     "test:chr": "npx cypress run --browser=chome",
     "show:nav": "npx cypress run --headed"
   },

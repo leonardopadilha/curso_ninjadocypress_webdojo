@@ -26,10 +26,11 @@
 
 import "cypress-real-events";
 import "./actions/consultancy.actions";
+import { getTodayFormattedDate } from "./utils.js";
 
 Cypress.Commands.add('start', () => {
-  cy.viewport(1440, 900)
-  cy.visit('http://localhost:3000/')
+  //cy.viewport(1440, 900)
+  cy.visit('/')
 })
 
 Cypress.Commands.add('submitLoginForm', (email, password) => {
@@ -49,14 +50,6 @@ Cypress.Commands.add('goTo', (buttonName, pageTitle) => {
     .should('be.visible')
 })
 
-function getTodayFormattedDate() {
-  const today = new Date()
-  const day = String(today.getDate()).padStart(2, '0')
-  const month = String(today.getMonth() + 1).padStart(2, '0')
-  const year = String(today.getFullYear())
-  return `${day}/${month}/${year}`
-}
-
 // Helper
 Cypress.Commands.add('login', (ui = false) => {
   if (ui) {
@@ -67,7 +60,7 @@ Cypress.Commands.add('login', (ui = false) => {
     const loginDate = getTodayFormattedDate()
 
     cy.setCookie('login_date', loginDate)
-    cy.visit('http://localhost:3000/dashboard', {
+    cy.visit('/dashboard', {
       onBeforeLoad(win) { // Antes de carregar a função
         win.localStorage.setItem('token', token)
       }
