@@ -1,36 +1,48 @@
 const express = require('express')
 const cors = require('cors')
+const prisma = require('./prismaClient') // importa o Prisma
 
 const app = express()
 const port = 3333
 
-// Habilita CORS para todas as origens
 app.use(cors())
 app.use(express.json())
 
-
 app.get('/', (req, res) => {
-  res.json({message: 'API do curso Ninja do Cypress!'})
+  res.json({ message: 'API do curso Ninja do Cypress!' })
 })
 
-app.post('/api/users/register', (req, res) => {
+app.post('/api/users/register', async (req, res) => {
   const { name, email, password } = req.body
 
-  if (!name) {
-    return res.status(400).json({error: 'Name is required!'})
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: 'Todos os campos são obrigatórios!' })
   }
 
-  if (!email) {
-    return res.status(400).json({error: 'Email is required!'})
-  }
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { email }
+    })
 
-  if (!password) {
-    return res.status(400).json({error: 'Password is required!'})
-  }
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email já cadastrado!' })
+    }
 
-  return res.status(201).json({message: 'Usuário cadastrado com sucesso!'})
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password // Em produção, você deve criptografar a senha com bcrypt!
+      }
+    })
+
+    res.status(201).json({ message: 'Usuário cadastrado com sucesso!', user })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Erro ao registrar usuário.' })
+  }
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Servidor rodando na porta ${port}`)
 })
