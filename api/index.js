@@ -8,6 +8,13 @@ const port = 3333
 app.use(cors())
 app.use(express.json())
 
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError) {
+    return res.status(400).json({ error: 'Invalid JSON format.'})
+  }
+  next()
+})
+
 app.get('/', (req, res) => {
   res.json({ message: 'API do curso Ninja do Cypress!' })
 })
@@ -15,8 +22,16 @@ app.get('/', (req, res) => {
 app.post('/api/users/register', async (req, res) => {
   const { name, email, password } = req.body;
 
-  if (!name || !email || !password) {
-    return res.status(400).json({ error: 'All fields are required.' });
+  if (!name) {
+    return res.status(400).json({ error:  'The name is required'});
+  }
+
+  if (!email) {
+    return res.status(400).json({ error:  'The email is required'});
+  }
+
+  if (!password) {
+    return res.status(400).json({ error: 'The password is required'});
   }
 
   try {
@@ -25,7 +40,7 @@ app.post('/api/users/register', async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(400).json({ error: 'Email is already registered.' });
+      return res.status(409).json({ error: 'Email is already registered.' });
     }
 
     const user = await prisma.user.create({
