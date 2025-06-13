@@ -13,35 +13,40 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/users/register', async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
-    return res.status(400).json({ error: 'Todos os campos são obrigatórios!' })
+    return res.status(400).json({ error: 'All fields are required.' });
   }
 
   try {
     const existingUser = await prisma.user.findUnique({
       where: { email }
-    })
+    });
 
     if (existingUser) {
-      return res.status(400).json({ error: 'Email já cadastrado!' })
+      return res.status(400).json({ error: 'Email is already registered.' });
     }
 
     const user = await prisma.user.create({
       data: {
         name,
         email,
-        password // Em produção, você deve criptografar a senha com bcrypt!
+        password // In production, make sure to hash the password using bcrypt or a similar library.
       }
-    })
+    });
 
-    res.status(201).json({ message: 'Usuário cadastrado com sucesso!', user })
+    // Remove password from the response
+    const { password: _, ...userWithoutPassword } = user;
+
+    res.status(201).json({ message: 'User successfully registered.', user: userWithoutPassword });
   } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Erro ao registrar usuário.' })
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while registering the user.' });
   }
-})
+});
+
+
 
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`)
