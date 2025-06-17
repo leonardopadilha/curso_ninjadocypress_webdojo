@@ -20,6 +20,7 @@
     "@faker-js/faker": "^9.8.0",
     "cypress": "^14.3.1",
     "cypress-plugin-api": "^2.11.2",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "pg-promise": "^11.14.0"
   }
 }

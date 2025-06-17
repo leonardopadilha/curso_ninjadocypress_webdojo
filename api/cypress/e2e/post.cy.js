@@ -1,15 +1,17 @@
 /// <reference types="cypress" />
 
-import { faker } from '@faker-js/faker';
+// import { faker } from '@faker-js/faker';
 
 describe('POST /api/users/register', () => {
   it('Deve cadastrar um novo usuário', () => {
 
     const user = {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
+      name: 'Wolverine',
+      email: 'logan@xmen.com',
       password: 'pwd123'
     }
+
+    cy.task('deleteUser', user.email)
 
     cy.postUser(user).then((response) => {
       expect(response.status).to.eq(201)
@@ -24,10 +26,12 @@ describe('POST /api/users/register', () => {
   it('Não deve cadastrar com email duplicado', () => {
 
     const user = {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
+      name: 'Cyclops',
+      email: 'scott@xmen.com',
       password: 'pwd123'
     }
+
+    cy.task('deleteUser', user.email)
 
     cy.postUser(user).then((response) => {
       expect(response.status).to.eq(201)
@@ -41,7 +45,7 @@ describe('POST /api/users/register', () => {
 
   it('O campo name deve ser obrigatório', () => {
     const user = {
-      email: 'leonardo@teste.com',
+      email: 'storm@xmen.com',
       password: 'pwd123'
     }
 
@@ -53,7 +57,7 @@ describe('POST /api/users/register', () => {
 
   it('O campo email deve ser obrigatório', () => {
     const user = {
-      name: 'Leonardo Teste',
+      name: 'Jean Grey',
       password: 'pwd123'
     }
 
@@ -65,8 +69,8 @@ describe('POST /api/users/register', () => {
 
   it('O campo password deve ser obrigatório', () => {
     const user = {
-      name: 'Leonardo Teste',
-      email: 'leonardo@teste.com'
+      name: 'charles Xavier',
+      email: 'xavier@xmen.com'
     }
 
     cy.postUser(user).then((response) => {
@@ -77,8 +81,8 @@ describe('POST /api/users/register', () => {
 
   it('Não deve passar quando o JSON está mal formatado', () => {
   const user = `{
-      name: 'Leonardo Teste',
-      email: 'leonardo@teste.com'
+      name: 'Magneto',
+      email: 'erick@xmen.com'
       password: 'pwd123'
     }`
 
