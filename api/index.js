@@ -61,7 +61,21 @@ app.post('/api/users/register', async (req, res) => {
   }
 });
 
-
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: false
+      }
+    })
+    res.status(200).json(users)
+  } catch (error) {
+    res.status(500).json({ error: 'Erro fetching users.'})
+  }
+})
 
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`)
