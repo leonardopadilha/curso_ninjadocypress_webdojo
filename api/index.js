@@ -81,6 +81,18 @@ app.put('/api/users/:id', async (req, res) => {
   const { id } = req.params
   const { name, email, password } = req.body
 
+  if (!name) {
+    return res.status(400).json({ error:  'The name is required'});
+  }
+
+  if (!email) {
+    return res.status(400).json({ error:  'The email is required'});
+  }
+
+  if (!password) {
+    return res.status(400).json({ error: 'The password is required'});
+  }
+
   try {
     await prisma.user.update({
       where: { id: Number(id) },
