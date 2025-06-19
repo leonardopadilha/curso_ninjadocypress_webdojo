@@ -77,6 +77,23 @@ app.get('/api/users', async (req, res) => {
   }
 })
 
+app.put('/api/users/:id', async (req, res) => {
+  const { id } = req.params
+  const { name, email, password } = req.body
+
+  try {
+    await prisma.user.update({
+      where: { id: Number(id) },
+      data: {
+        name, email, password
+      }
+    })
+    res.status(204).end()
+  } catch (error) {
+    res.status(500).json({ error: 'error updating user :('})
+  }
+})
+
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`)
 })
