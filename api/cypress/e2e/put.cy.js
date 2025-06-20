@@ -90,4 +90,47 @@ describe("put /api/users/:id", () => {
         })
       })
   });
+
+  context('Quando o id não existe', () => {
+    let userId;
+
+    const originalUser = {
+      name: "Tony Stark",
+      email: "tony@stark.com",
+      password: "123456",
+    };
+
+    const updatedUser = {
+      name: "Ironman",
+      email: "ironman@marvel.com",
+      password: "pwd123",
+    };
+
+    before(() => {
+      cy.task("deleteUser", originalUser.email);
+      cy.task("deleteUser", updatedUser.email);
+
+      cy.postUser(originalUser).then((response) => {
+        cy.log(response.body.user.id);
+        userId = response.body.user.id;
+      });
+
+      cy.task("deleteUser", originalUser.email);
+    });
+
+    it("Deve retornar 404 e user not found", () => {
+      cy.api({
+        method: "PUT",
+        url: `http://localhost:3333/api/users/${userId}`,
+        Headers: {
+          "Content-Type": "application/json",
+        },
+        body: updatedUser,
+        failOnStatusCode: false,
+      }).then((response) => {
+        expect(response.status).to.eq(404);
+        expect(response.body.error).to.eq("User not found")
+      });
+    });
+  })
 });
