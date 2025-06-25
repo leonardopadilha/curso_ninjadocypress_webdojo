@@ -28,6 +28,7 @@ describe('Login', () => {
     })
   })
 
+  // utilizando a aba source => recorder
   it('Não deve logar com senha inválida', () => {
     cy.start()
     cy.submitLoginForm('papito@webdojo.com', 'katana321')
